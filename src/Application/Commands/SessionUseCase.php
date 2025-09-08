@@ -19,8 +19,6 @@ class SessionUseCase
     {
         error_log("SESSION USECASE called");
         $items = $this->sessionRepo->getUserSessions($id);
-
-        error_log("DDDDDDDDDDDDD " . print_r($items, true));
         
         $sessions = [];
 
