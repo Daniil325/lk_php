@@ -1,0 +1,2 @@
+ivan@mail.ru:{id:1,name:Ivan,surname:Ivanov,password:$2y$12$dnq5QvaxWfV2/v6f2q4VyeKCHWAmp7NtFSEhkmae0ywvIoWVg54fS,age:20,sex:m}
+test@mail.ru:$2y$12$kVnXu0ezK3dQ0IAnuTQsLupFXZkK4b9jFrrTaTzKDeJ5qy3y0Vk4a
