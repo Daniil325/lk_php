@@ -86,7 +86,7 @@ $router->get("/sessions/:id", [$SessionController, 'displayInfo'], true);
 $router->delete("/logout", [$LogoutCommand, 'handle'], true, '/');
 
 
-
+try {
     $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
         strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 
@@ -99,3 +99,7 @@ $router->delete("/logout", [$LogoutCommand, 'handle'], true, '/');
         echo $result;
         exit;
     }
+} catch (Throwable $e) {
+    echo handleError($e, $isAjax ?? false);
+    exit;
+}
