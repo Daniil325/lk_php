@@ -3,24 +3,29 @@
 use Infrastructure\ISession;
 
 
-$sessionPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'sessions';
-if (!is_dir($sessionPath)) {
-    mkdir($sessionPath, 0700, true);
+try {
+    $sessionPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'sessions';
+    if (!is_dir($sessionPath)) {
+        mkdir($sessionPath, 0700, true);
+    }
+    ini_set('session.save_path', $sessionPath);
+    ini_set('session.gc_maxlifetime', 3600);
+    ini_set('session.gc_probability', 1);
+    ini_set('session.gc_divisor', 100);
+
+
+    $componentsPath = __DIR__ . "../../src/Presentation/Components";
+    include '../src/app.php';
+
+    $session = $container->get(ISession::class);
+    $session->start();
+    $isAuthenticated = $session->has('userData');
+    error_log("USER DATA: " . print_r($_SESSION, true));
+} catch (Throwable $e) {
+    http_response_code(500);
+    echo "<h1>Ошибка</h1><pre>" . htmlspecialchars($e->getMessage()) . "</pre>";
+    exit;
 }
-ini_set('session.save_path', $sessionPath);
-ini_set('session.gc_maxlifetime', 3600);
-ini_set('session.gc_probability', 1);
-ini_set('session.gc_divisor', 100);
-
-
-$componentsPath = __DIR__ . "../../src/Presentation/Components";
-include '../src/app.php';
-
-$session = $container->get(ISession::class);
-$session->start();
-$isAuthenticated = $session->has('userData');
-
-
 ?>
 <!DOCTYPE html>
 
