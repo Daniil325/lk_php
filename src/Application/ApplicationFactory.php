@@ -36,7 +36,7 @@ class ApplicationFactory
     private function registerUseCases(): void
     {
         $this->container->set(RegistrationUseCase::class, function () {
-            return new RegistrationUseCase($this->container->get(IUserRepository::class));
+            return new RegistrationUseCase($this->container->get(IUserRepository::class), $this->container->get(ISession::class));
         });
 
         $this->container->set(LoginUseCase::class, function () {
@@ -56,13 +56,13 @@ class ApplicationFactory
             );
         });
 
-        $this->container->set(SessionUseCase ::class, function () {
-            return new SessionUseCase (
+        $this->container->set(SessionUseCase::class, function () {
+            return new SessionUseCase(
                 $this->container->get(ISession::class),
             );
         });
 
-        $this->container->set(LogoutCommand::class, function() {
+        $this->container->set(LogoutCommand::class, function () {
             return new LogoutCommand(
                 $this->container->get(ISession::class),
             );
